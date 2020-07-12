@@ -1,145 +1,72 @@
-#ifndef DATA_STRUCTURES_STACK_
-#define DATA_STRUCTURES_STACK_
-
 #include <cassert>
 #include <iostream>
 
-template <class Type>
-struct node
-{
-    Type data;
-    node<Type> *next;
+struct node {
+  int data;
+  node *next;
 };
 
-template <class Type>
-class stack
-{
+class stack {
 private:
-    node<Type> *top;
-    int size;
+  node *top;
+  int len;
 
 public:
-    stack()
-    {
-        top = nullptr;
-        size = 0;
+  stack() {
+    top = nullptr;
+    len = 0;
+  }
+
+  ~stack() {}
+
+  bool empty() { return (top == nullptr); }
+
+  void push(int val) {
+    node *newNode = new node();
+    newNode->data = val;
+    newNode->next = top;
+    top = newNode;
+    len++;
+  }
+
+  void pop() {
+    if (empty()) {
+      std::cout << "Empty stack. Nothing to pop !"
+                << "\n";
+    } else {
+      node *temp = top;
+      top = top->next;
+      delete temp;
+      len--;
     }
+  }
 
-    explicit stack(const stack<Type> &otherStack)
-    {
-        if (top)
-        {
-            top = nullptr;
-        }
-        if (!otherStack.top)
-        {
-            top = nullptr;
-        }
-        else
-        {
-            node<Type> *current, *last, *newNode;
-            current = otherStack.top;
-            top = new node<Type>;
-            top->data = current->data;
-            top->next = nullptr;
-            last = top;
-            current = current->next;
-            while (current)
-            {
-                newNode = new node<Type>;
-                newNode->data = current->data;
-                newNode->next = nullptr;
-                last->next = newNode;
-                last = newNode;
-                current = current->next;
-            }
-        }
-        size = otherStack.size;
-        return *this;
+  int peek() {
+    assert(top != nullptr);
+    return top->data;
+  }
+
+  void clear() {
+    node *temp;
+    while (top) {
+      temp = top;
+      top = top->next;
+      delete temp;
+      len--;
     }
+  }
 
-    ~stack() {}
-
-    void push(Type item)
-    {
-        node<Type> *newNode = new node<Type>;
-        newNode->data = item;
-        newNode->next = top;
-        top = newNode;
-        size++;
-    }
-
-    Type peek()
-    {
-        assert(top != nullptr);
-        return top->data;
-    }
-
-    Type pop()
-    {
-        if (!empty())
-        {
-            node<Type> *temp = top;
-            top = top->next;
-            delete temp;
-            size--;
-        }
-        else
-        {
-            cout << "Stack is empty !" << endl;
-        }
-    }
-
-    void clear()
-    {
-        node<Type> *temp;
-        while (top)
-        {
-            temp = top;
-            top = top->next;
-            delete temp;
-        }
-    }
-
-    bool empty()
-    {
-        return (top != nullptr);
-    }
-
-    stack<Type> &operator=(const stack<Type> &otherStack)
-    {
-        node<Type> *newNode, *current, *last;
-
-        if (top != nullptr)
-        {
-            top = nullptr;
-        }
-        if (otherStack.top == nullptr)
-        {
-            top = nullptr;
-        }
-        else
-        {
-            current = otherStack.top;
-            top = new node<Type>;
-            top->data = current->data;
-            top->next = nullptr;
-            last = top;
-            current = current->next;
-
-            while (current != nullptr)
-            {
-                newNode = new node<Type>;
-                newNode->data = current->data;
-                newNode->next = nullptr;
-                last->next = newNode;
-                last = newNode;
-                current = current->next;
-            }
-        }
-        size = otherStack.size;
-        return *this;
-    }
+  int size() { return len; }
 };
 
-#endif
+int main() {
+    stack test_st;
+    test_st.push(1);
+    test_st.push(2);
+    test_st.push(3);
+    std::cout << "Number of elements in stack: " << test_st.size() << "\n";
+    test_st.pop();
+    std::cout << "Top element of the stack is: " << test_st.peek() << "\n";
+    assert(test_st.size() == 2);
+    return 0;
+}
