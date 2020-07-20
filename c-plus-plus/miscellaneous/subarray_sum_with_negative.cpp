@@ -7,16 +7,17 @@ public:
     static void subarray_sum(vector<int> nums, int sum)
     {
         int current_sum = nums[0], start = 0, end;
+        int factor = abs(*min_element(nums.begin(), nums.end())); 
 
         for (end = 1; end <= nums.size(); end++)
         {
             while (current_sum > sum && start < end - 1)
             {
-                current_sum -= nums[start];
+                current_sum -= (nums[start] + factor);
                 start++;
             }
 
-            if (current_sum == sum)
+            if (current_sum == sum + (end-start)*factor)
             {
                 cout << "Sum found between indices " << start << " and " << end - 1 << "\n";
                 return;
@@ -24,7 +25,7 @@ public:
 
             if (end < nums.size())
             {
-                current_sum += nums[end];
+                current_sum += (nums[end] + factor);
             }
         }
 

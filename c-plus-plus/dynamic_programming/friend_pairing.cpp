@@ -10,7 +10,7 @@ Solution: For each person, there are two possibilities:
 
 */
 
-#include <stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 int friends_pairing(int n)

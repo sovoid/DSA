@@ -1,4 +1,4 @@
-#include <stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 int count(const vector<int> &coins, int sum)
@@ -7,9 +7,12 @@ int count(const vector<int> &coins, int sum)
 
     dp[0] = 1;
 
-    for (int i = 0; i < coins.size(); i++) {
-        for (int j = 0; j <= sum; j++) {
-            if(coins[i] <= j) {
+    for (int i = 0; i < coins.size(); i++)
+    {
+        for (int j = 0; j <= sum; j++)
+        {
+            if (coins[i] <= j)
+            {
                 dp[j] += dp[j - coins[i]];
             }
         }

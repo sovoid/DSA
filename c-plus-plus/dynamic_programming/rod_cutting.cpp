@@ -9,7 +9,7 @@ dp[n] = max(prices[i] + dp[n-i-1]) for i=0...n-1
 
 */
 
-#include <stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 int rod_cutting(const vector<int> &prices, int n)
